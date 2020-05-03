@@ -2054,6 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         _this2.errors = {};
         _this2.message = 'Ok';
+        _this2.cart = [];
       })["catch"](function (error) {});
     }
   }

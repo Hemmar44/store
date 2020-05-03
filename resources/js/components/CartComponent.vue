@@ -138,7 +138,8 @@
                 axios.post('/order', {customer: this.customer}).then(
                     () => {
                         this.errors = {};
-                        this.message = 'Ok'
+                        this.message = 'Ok';
+                        this.cart = [];
                     }).catch(error => {
 
                 });

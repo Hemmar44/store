@@ -45,6 +45,8 @@ class OrderController extends Controller
                 $storehouse->quantity = $storehouse->quantity - $cart[$storehouse->product_id];
                 $storehouse->save();
             }
+            $request->session()->put('cart', []);
+            $request->session()->save();
             return response(['message' => 'Ok']);
         } catch (\Exception $exception) {
             return response(['error' => 'Something went wrong'], 400);
