@@ -15,23 +15,35 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
 
-        Schema::create('product_cart', function (Blueprint $table) {
-            $table->unsignedBigInteger('product_id');
+        Schema::create('cart_user', function (Blueprint $table) {
             $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->index(['product_id', 'cart_id']);
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products');
+            $table->unique(['cart_id', 'user_id']);
             $table->foreign('cart_id')
                 ->references('id')
                 ->on('carts')
                 ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+        });
+
+        Schema::create('cart_product', function (Blueprint $table) {
+            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('product_id');
+            $table->timestamps();
+            $table->index(['cart_id', 'product_id']);
+            $table->foreign('cart_id')
+                ->references('id')
+                ->on('carts')
+                ->onDelete('cascade');
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products');
         });
     }
 
@@ -42,7 +54,8 @@ class CreateCartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_cart');
+        Schema::dropIfExists('cart_user');
+        Schema::dropIfExists('cart_product');
         Schema::dropIfExists('carts');
     }
 }

@@ -19,4 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', 'AdminController@index')->name('admin')->middleware(['auth', 'admin']);
+Route::get('products', 'ProductController@index');
+Route::get('products/{product}', 'ProductController@show');
+Route::post('cart', 'CartController@add');
+Route::get('cart', 'CartController@show');
+Route::delete('cart/{product}', 'CartController@remove');
+Route::post('order', 'OrderController@make');
+
+
